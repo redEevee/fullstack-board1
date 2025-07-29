@@ -2,7 +2,7 @@
 
 ## 사용 방법
 
-1. MySQL에 `board_db` 생성 및 `posts` 테이블 생성
+1. MySQL에 `board_db` 생성 및 `posts` 테이블 생성, users 테이블생성
 
 ```sql
 CREATE DATABASE board_db;
@@ -14,6 +14,15 @@ CREATE TABLE posts (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 ```
+
+```sql
+CREATE TABLE users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  email VARCHAR(100) UNIQUE NOT NULL,
+  password VARCHAR(255) NOT NULL
+);
+```
+
 
 2. 서버 실행
 
