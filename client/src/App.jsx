@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PostListPage from "./pages/PostListPage";
 import PostDetailPage from "./pages/PostDetailPage";
 import PostWritePage from "./pages/PostWritePage";
+import PostEditPage from "./pages/PostEditPage";
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<PostListPage />} />
         <Route path="/post/:id" element={<PostDetailPage />} />
         <Route path="/write" element={<PostWritePage />} />
+        <Route path="/edit/:id" element={<PostEditPage />} />
       </Routes>
     </BrowserRouter>
   );
