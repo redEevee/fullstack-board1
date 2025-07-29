@@ -23,19 +23,25 @@ export default function PostEditPage() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>게시글 수정</h2>
-      <input
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        placeholder="제목"
-      />
-      <textarea
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-        placeholder="내용"
-      />
-      <button type="submit">수정하기</button>
-    </form>
+    <section className="tm-section tm-section-small">
+      <div className="tm-content-box">
+        <h2 className="tm-text-primary mb-4">게시글 수정</h2>
+        <form onSubmit={handleSubmit}>
+          <input
+            className="form-control mb-3"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="제목"
+          />
+          <textarea
+            className="form-control mb-3"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            placeholder="내용"
+          />
+          <button type="submit" className="btn btn-warning btn-block">수정하기</button>
+        </form>
+      </div>
+    </section>
   );
 }

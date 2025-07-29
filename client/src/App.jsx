@@ -1,23 +1,31 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 import PostListPage from "./pages/PostListPage";
-import PostDetailPage from "./pages/PostDetailPage";
 import PostWritePage from "./pages/PostWritePage";
+import PostDetailPage from "./pages/PostDetailPage";
 import PostEditPage from "./pages/PostEditPage";
-import "react-toastify/dist/ReactToastify.css";
 
-function App() {
+export default function App() {
   return (
-    <BrowserRouter>
-    
-      <Routes>
-        <Route path="/" element={<PostListPage />} />
-        <Route path="/post/:id" element={<PostDetailPage />} />
-        <Route path="/write" element={<PostWritePage />} />
-        <Route path="/edit/:id" element={<PostEditPage />} />
-      </Routes>
-    </BrowserRouter>
+    <div className="tm-page-wrap mx-auto">
+      <Header />
+      <main className="container-fluid">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/board" element={<PostListPage />} />
+          <Route path="/write" element={<PostWritePage />} />
+          <Route path="/post/:id" element={<PostDetailPage />} />
+          <Route path="/edit/:id" element={<PostEditPage />} />
+        </Routes>
+      </main>
+      <Footer />
+    </div>
   );
 }
-
-export default App;
