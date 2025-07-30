@@ -24,7 +24,15 @@ CREATE TABLE users (
 ```
 
 
-2. 서버 실행
+2. `server/.env` 파일 설정
+
+```bash
+cd server
+cp .env.example .env
+# .env 파일을 열어 실제 DB 정보와 JWT_SECRET 값을 입력하세요.
+```
+
+3. 서버 실행
 
 ```
 cd server
@@ -32,7 +40,7 @@ npm install
 npm start
 ```
 
-3. 클라이언트 실행
+4. 클라이언트 실행
 
 ```
 cd client
