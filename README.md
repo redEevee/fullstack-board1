@@ -40,4 +40,4 @@ npm install
 npm start
 ```
 
-API 서버는 `localhost:5000`, React는 `localhost:3000`에서 실행됩니다.
+API 서버는 `localhost:5001`, React는 `localhost:3000`에서 실행됩니다.
