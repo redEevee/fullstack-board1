@@ -49,3 +49,13 @@ npm start
 ```
 
 API 서버는 `localhost:5001`, React는 `localhost:3000`에서 실행됩니다.
+
+## 주요 API 엔드포인트
+
+- `POST /api/auth/signup` - 회원 가입
+- `POST /api/auth/login` - 로그인 후 JWT 토큰 반환
+- `GET /api/posts` - 게시글 목록 조회
+- `GET /api/posts/:id` - 게시글 상세 조회
+- `POST /api/posts` - 게시글 작성 (JWT 필요)
+- `PUT /api/posts/:id` - 게시글 수정 (JWT 필요)
+- `DELETE /api/posts/:id` - 게시글 삭제 (JWT 필요)

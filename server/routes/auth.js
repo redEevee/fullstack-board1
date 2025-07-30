@@ -29,9 +29,11 @@ router.post("/login", (req, res) => {
       const match = await bcrypt.compare(password, results[0].password);
       if (!match) return res.status(401).send("비밀번호 틀림");
 
-      const token = jwt.sign({ userId: results[0].id }, "SECRET_KEY", {
-        expiresIn: "1h",
-      });
+      const token = jwt.sign(
+        { userId: results[0].id },
+        process.env.JWT_SECRET || "SECRET_KEY",
+        { expiresIn: "1h" }
+      );
       res.json({ token });
     }
   );
