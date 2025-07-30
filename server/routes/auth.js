@@ -1,7 +1,9 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const router = express.Router();
 const db = require("../db");
+const verifyToken = require("../middleware/verifyToken");
 
 router.post("/signup", async (req, res) => {
   const { email, password } = req.body;
@@ -15,7 +17,6 @@ router.post("/signup", async (req, res) => {
     }
   );
 });
-const jwt = require("jsonwebtoken");
 
 router.post("/login", (req, res) => {
   const { email, password } = req.body;
@@ -36,24 +37,4 @@ router.post("/login", (req, res) => {
   );
 });
 
-const jwt = require("jsonwebtoken");
-
-function verifyToken(req, res, next) {
-  const token = req.headers.authorization?.split(" ")[1];
-  if (!token) return res.sendStatus(401);
-  try {
-    const decoded = jwt.verify(token, "SECRET_KEY");
-    req.user = decoded;
-    next();
-  } catch (err) {
-    res.sendStatus(403);
-  }
-}
-
-module.exports = verifyToken;
-
-const verifyToken = require("./middleware/verifyToken");
-
-router.post("/posts", verifyToken, (req, res) => {
-  // 로그인한 사용자만 글 작성 가능
-});
+module.exports = router;
