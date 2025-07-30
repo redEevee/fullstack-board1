@@ -12,6 +12,7 @@ export default function PostListPage() {
   return (
     <div>
       <h1>게시판</h1>
+      <Link to="/login">로그인</Link>
       <Link to="/write">✍️ 글쓰기</Link>
       <ul>
         {posts.map((post) => (
