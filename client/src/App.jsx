@@ -7,6 +7,7 @@ import PostEditPage from "./pages/PostEditPage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import "react-toastify/dist/ReactToastify.css";
+import './global.css';
 
 function App() {
   return (
