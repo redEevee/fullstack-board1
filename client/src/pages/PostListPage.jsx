@@ -26,7 +26,14 @@ export default function PostListPage() {
                 }}
               >
                 로그아웃
+
               </button>
+              <br /><br />
+
+              <p className="magin">  </p>
+
+              <p className="magin">  </p>
+
               <Link to="/write">✍️ 글쓰기</Link>
             </>
           ) : (
