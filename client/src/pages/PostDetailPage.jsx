@@ -27,11 +27,15 @@ export default function PostDetailPage() {
   if (!post) return <p>로딩 중...</p>;
 
   return (
-    <div>
+    <div className="container post-detail">
       <h2>{post.title}</h2>
-      <p>{post.content}</p>
-      <button onClick={handleEdit}>✏️ 수정</button>
-      <button onClick={handleDelete}>🗑️ 삭제</button>
+      <p className="post-content">{post.content}</p>
+      <div className="post-actions">
+        <button onClick={handleEdit}>✏️ 수정</button>
+        <button onClick={handleDelete} className="delete-btn">
+          🗑️ 삭제
+        </button>
+      </div>
     </div>
   );
 }
