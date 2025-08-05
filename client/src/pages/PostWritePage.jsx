@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { createPost } from "../api/postApi";
 
@@ -6,6 +6,12 @@ export default function PostWritePage() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      navigate("/login");
+    }
+  }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
