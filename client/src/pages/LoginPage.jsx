@@ -1,20 +1,65 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { login } from "../api/authApi";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    
     try {
-      const res = await login({ email, password });
-      localStorage.setItem("token", res.data.token);
-      navigate("/");
-    } catch (err) {
-      alert("로그인 실패");
+      const result = await login(email, password);
+      if (result.success) {
+        alert(`✅ ${result.message}\n메인 페이지로 이동합니다.`);
+        navigate("/");
+      } else {
+        // 서버에서 보내는 상세한 에러 메시지 표시
+        let errorMessage = `❌ 로그인 실패\n\n${result.message}`;
+        
+        // 추가 정보가 있으면 표시
+        if (result.errors && Array.isArray(result.errors)) {
+          errorMessage += "\n\n상세 오류:";
+          result.errors.forEach(error => {
+            errorMessage += `\n• ${error.field}: ${error.message}`;
+          });
+        }
+        
+        alert(errorMessage);
+      }
+    } catch (error) {
+      console.error("로그인 에러:", error);
+      
+      // 네트워크 에러나 서버 에러 구분해서 표시
+      let errorMessage = "❌ 로그인 중 오류가 발생했습니다\n\n";
+      
+      if (error.response) {
+        // 서버에서 응답이 온 경우
+        const serverError = error.response.data;
+        errorMessage += `서버 오류 (${error.response.status}): ${serverError.message || '알 수 없는 오류'}`;
+        
+        if (serverError.errors && Array.isArray(serverError.errors)) {
+          errorMessage += "\n\n상세 오류:";
+          serverError.errors.forEach(err => {
+            errorMessage += `\n• ${err.field}: ${err.message}`;
+          });
+        }
+      } else if (error.request) {
+        // 네트워크 에러
+        errorMessage += "네트워크 연결을 확인해주세요.\n서버가 실행 중인지 확인해보세요.";
+      } else {
+        // 기타 에러
+        errorMessage += error.message || "알 수 없는 오류가 발생했습니다.";
+      }
+      
+      alert(errorMessage);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -32,7 +77,9 @@ export default function LoginPage() {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button type="submit">로그인</button>
+      <button type="submit" disabled={isLoading}>
+        {isLoading ? "로그인 중..." : "로그인"}
+      </button>
       <p>
         회원이 아니신가요? <Link to="/signup">회원가입</Link>
       </p>

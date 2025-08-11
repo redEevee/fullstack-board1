@@ -1,43 +1,22 @@
 const express = require("express");
 const router = express.Router();
-const db = require("../db");
 const verifyToken = require("../middleware/verifyToken");
+const postsController = require("../controllers/postsController");
+const { validatePost, validatePostId } = require("../middleware/validation");
 
-router.get("/", (req, res) => {
-  db.query("SELECT * FROM posts ORDER BY id DESC", (err, results) => {
-    if (err) return res.status(500).send(err);
-    res.json(results);
-  });
-});
+// 게시글 목록 조회
+router.get("/", postsController.getAllPosts);
 
-router.get("/:id", (req, res) => {
-  db.query("SELECT * FROM posts WHERE id = ?", [req.params.id], (err, results) => {
-    if (err) return res.status(500).send(err);
-    res.json(results[0]);
-  });
-});
+// 게시글 상세 조회
+router.get("/:id", validatePostId, postsController.getPostById);
 
-router.post("/", verifyToken, (req, res) => {
-  const { title, content } = req.body;
-  db.query("INSERT INTO posts (title, content) VALUES (?, ?)", [title, content], (err, result) => {
-    if (err) return res.status(500).send(err);
-    res.json({ id: result.insertId, title, content });
-  });
-});
+// 게시글 작성 (인증 필요)
+router.post("/", verifyToken, validatePost, postsController.createPost);
 
-router.delete("/:id", verifyToken, (req, res) => {
-  db.query("DELETE FROM posts WHERE id = ?", [req.params.id], (err) => {
-    if (err) return res.status(500).send(err);
-    res.sendStatus(200);
-  });
-});
+// 게시글 수정 (인증 필요)
+router.put("/:id", verifyToken, validatePostId, validatePost, postsController.updatePost);
 
-router.put("/:id", verifyToken, (req, res) => {
-  const { title, content } = req.body;
-  db.query("UPDATE posts SET title=?, content=? WHERE id=?", [title, content, req.params.id], (err) => {
-    if (err) return res.status(500).send(err);
-    res.sendStatus(200);
-  });
-});
+// 게시글 삭제 (인증 필요)
+router.delete("/:id", verifyToken, validatePostId, postsController.deletePost);
 
 module.exports = router;
